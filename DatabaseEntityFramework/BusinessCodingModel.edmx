@@ -1,0 +1,473 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BusinessCodingModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="BusinessCodingModelStoreContainer">
+    <EntitySet Name="Users" EntityType="BusinessCodingModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Companies" EntityType="BusinessCodingModel.Store.Companies" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Empolyees" EntityType="BusinessCodingModel.Store.Empolyees" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TypesOfEmployees" EntityType="BusinessCodingModel.Store.TypesOfEmployees" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Projects" EntityType="BusinessCodingModel.Store.Projects" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Descriptions" EntityType="BusinessCodingModel.Store.Descriptions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TypesOfOffices" EntityType="BusinessCodingModel.Store.TypesOfOffices" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="TypesOfOfficesCompanies" Association="BusinessCodingModel.Store.TypesOfOfficesCompanies">
+      <End Role="TypesOfOffices" EntitySet="TypesOfOffices" />
+      <End Role="Companies" EntitySet="Companies" />
+    </AssociationSet>
+    <AssociationSet Name="EmpolyeesTypesOfEmployees" Association="BusinessCodingModel.Store.EmpolyeesTypesOfEmployees">
+      <End Role="Empolyees" EntitySet="Empolyees" />
+      <End Role="TypesOfEmployees" EntitySet="TypesOfEmployees" />
+    </AssociationSet>
+    <AssociationSet Name="CompaniesProjects" Association="BusinessCodingModel.Store.CompaniesProjects">
+      <End Role="Companies" EntitySet="Companies" />
+      <End Role="Projects" EntitySet="Projects" />
+    </AssociationSet>
+    <AssociationSet Name="CompaniesEmpolyees" Association="BusinessCodingModel.Store.CompaniesEmpolyees">
+      <End Role="Companies" EntitySet="Companies" />
+      <End Role="Empolyees" EntitySet="Empolyees" />
+    </AssociationSet>
+    <AssociationSet Name="UsersCompanies" Association="BusinessCodingModel.Store.UsersCompanies">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Companies" EntitySet="Companies" />
+    </AssociationSet>
+    <AssociationSet Name="ProjectsDescriptions" Association="BusinessCodingModel.Store.ProjectsDescriptions">
+      <End Role="Projects" EntitySet="Projects" />
+      <End Role="Descriptions" EntitySet="Descriptions" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ActivationDate" Type="datetime" Nullable="false" />
+    <Property Name="LastLogin" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Companies">
+    <Key>
+      <PropertyRef Name="CompanyID" />
+    </Key>
+    <Property Name="CompanyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Respect" Type="int" Nullable="false" />
+    <Property Name="Money" Type="float" Nullable="false" />
+    <Property Name="CostOfLiving" Type="float" Nullable="false" />
+    <Property Name="TypesOfOfficesTOOfficeID" Type="int" Nullable="false" />
+    <Property Name="UsersUserID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Empolyees">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DateOfHiring" Type="datetime" Nullable="true" />
+    <Property Name="TypesOfEmployeesTOEmployeeID" Type="int" Nullable="false" />
+    <Property Name="CompaniesCompanyID" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="TypesOfEmployees">
+    <Key>
+      <PropertyRef Name="TOEmployeeID" />
+    </Key>
+    <Property Name="TOEmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Salary" Type="float" Nullable="false" />
+    <Property Name="Codity" Type="smallint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Projects">
+    <Key>
+      <PropertyRef Name="ProjectID" />
+    </Key>
+    <Property Name="ProjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Complexity" Type="smallint" Nullable="false" />
+    <Property Name="TimeRounds" Type="smallint" Nullable="false" />
+    <Property Name="TimeToEnd" Type="smallint" Nullable="true" />
+    <Property Name="Gratification" Type="float" Nullable="false" />
+    <Property Name="MinRespect" Type="int" Nullable="false" />
+    <Property Name="MinCodity" Type="smallint" Nullable="false" />
+    <Property Name="CompaniesCompanyID" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Descriptions">
+    <Key>
+      <PropertyRef Name="DescriptionID" />
+    </Key>
+    <Property Name="DescriptionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="String" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ProjectsProjectID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TypesOfOffices">
+    <Key>
+      <PropertyRef Name="TOOfficeID" />
+    </Key>
+    <Property Name="TOOfficeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Capacity" Type="smallint" Nullable="false" />
+    <Property Name="CostOfHiring" Type="float" Nullable="false" />
+  </EntityType>
+  <Association Name="TypesOfOfficesCompanies">
+    <End Role="TypesOfOffices" Type="BusinessCodingModel.Store.TypesOfOffices" Multiplicity="1" />
+    <End Role="Companies" Type="BusinessCodingModel.Store.Companies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TypesOfOffices">
+        <PropertyRef Name="TOOfficeID" />
+      </Principal>
+      <Dependent Role="Companies">
+        <PropertyRef Name="TypesOfOfficesTOOfficeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EmpolyeesTypesOfEmployees">
+    <End Role="Empolyees" Type="BusinessCodingModel.Store.Empolyees" Multiplicity="*" />
+    <End Role="TypesOfEmployees" Type="BusinessCodingModel.Store.TypesOfEmployees" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="TypesOfEmployees">
+        <PropertyRef Name="TOEmployeeID" />
+      </Principal>
+      <Dependent Role="Empolyees">
+        <PropertyRef Name="TypesOfEmployeesTOEmployeeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CompaniesProjects">
+    <End Role="Companies" Type="BusinessCodingModel.Store.Companies" Multiplicity="0..1" />
+    <End Role="Projects" Type="BusinessCodingModel.Store.Projects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Companies">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="Projects">
+        <PropertyRef Name="CompaniesCompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CompaniesEmpolyees">
+    <End Role="Companies" Type="BusinessCodingModel.Store.Companies" Multiplicity="0..1" />
+    <End Role="Empolyees" Type="BusinessCodingModel.Store.Empolyees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Companies">
+        <PropertyRef Name="CompanyID" />
+      </Principal>
+      <Dependent Role="Empolyees">
+        <PropertyRef Name="CompaniesCompanyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UsersCompanies">
+    <End Role="Users" Type="BusinessCodingModel.Store.Users" Multiplicity="1" />
+    <End Role="Companies" Type="BusinessCodingModel.Store.Companies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Companies">
+        <PropertyRef Name="UsersUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProjectsDescriptions">
+    <End Role="Projects" Type="BusinessCodingModel.Store.Projects" Multiplicity="1" />
+    <End Role="Descriptions" Type="BusinessCodingModel.Store.Descriptions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="ProjectID" />
+      </Principal>
+      <Dependent Role="Descriptions">
+        <PropertyRef Name="ProjectsProjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="BusinessCodingModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="BusinessCodingModelContex" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="BusinessCodingModel.Users" />
+          <EntitySet Name="Companies" EntityType="BusinessCodingModel.Companies" />
+          <EntitySet Name="Empolyees" EntityType="BusinessCodingModel.Empolyees" />
+          <EntitySet Name="TypesOfEmployees" EntityType="BusinessCodingModel.TypesOfEmployees" />
+          <EntitySet Name="Projects" EntityType="BusinessCodingModel.Projects" />
+          <EntitySet Name="Descriptions" EntityType="BusinessCodingModel.Descriptions" />
+          <EntitySet Name="TypesOfOffices" EntityType="BusinessCodingModel.TypesOfOffices" />
+          <AssociationSet Name="TypesOfOfficesCompanies" Association="BusinessCodingModel.TypesOfOfficesCompanies">
+            <End Role="TypesOfOffices" EntitySet="TypesOfOffices" />
+            <End Role="Companies" EntitySet="Companies" />
+          </AssociationSet>
+          <AssociationSet Name="EmpolyeesTypesOfEmployees" Association="BusinessCodingModel.EmpolyeesTypesOfEmployees">
+            <End Role="Empolyees" EntitySet="Empolyees" />
+            <End Role="TypesOfEmployees" EntitySet="TypesOfEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="CompaniesProjects" Association="BusinessCodingModel.CompaniesProjects">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="CompaniesEmpolyees" Association="BusinessCodingModel.CompaniesEmpolyees">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="Empolyees" EntitySet="Empolyees" />
+          </AssociationSet>
+          <AssociationSet Name="UsersCompanies" Association="BusinessCodingModel.UsersCompanies">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Companies" EntitySet="Companies" />
+          </AssociationSet>
+          <AssociationSet Name="ProjectsDescriptions" Association="BusinessCodingModel.ProjectsDescriptions">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Descriptions" EntitySet="Descriptions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Type="Int32" Name="UserID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Login" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Password" Nullable="false" />
+          <Property Type="String" Name="Email" Nullable="false" />
+          <Property Type="DateTime" Name="ActivationDate" Nullable="false" />
+          <Property Type="DateTime" Name="LastLogin" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Companies">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Type="Int32" Name="CompanyID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Int32" Name="Respect" Nullable="false" />
+          <Property Type="Double" Name="Money" Nullable="false" />
+          <Property Type="Double" Name="CostOfLiving" Nullable="false" />
+          <Property Type="Int32" Name="TypesOfOfficesTOOfficeID" Nullable="false" />
+          <Property Type="Int32" Name="UsersUserID" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empolyees">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Type="Int32" Name="EmployeeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="DateOfHiring" Nullable="true" />
+          <Property Type="Int32" Name="TypesOfEmployeesTOEmployeeID" Nullable="false" />
+          <Property Type="Int32" Name="CompaniesCompanyID" Nullable="true" />
+        </EntityType>
+        <EntityType Name="TypesOfEmployees">
+          <Key>
+            <PropertyRef Name="TOEmployeeID" />
+          </Key>
+          <Property Type="Int32" Name="TOEmployeeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Double" Name="Salary" Nullable="false" />
+          <Property Type="Int16" Name="Codity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="ProjectID" />
+          </Key>
+          <Property Type="Int32" Name="ProjectID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Int16" Name="Complexity" Nullable="false" />
+          <Property Type="Int16" Name="TimeRounds" Nullable="false" />
+          <Property Type="Int16" Name="TimeToEnd" Nullable="true" />
+          <Property Type="Double" Name="Gratification" Nullable="false" />
+          <Property Type="Int32" Name="MinRespect" Nullable="false" />
+          <Property Type="Int16" Name="MinCodity" Nullable="false" />
+          <Property Type="Int32" Name="CompaniesCompanyID" Nullable="true" />
+        </EntityType>
+        <EntityType Name="Descriptions">
+          <Key>
+            <PropertyRef Name="DescriptionID" />
+          </Key>
+          <Property Type="Int32" Name="DescriptionID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="String" Nullable="false" />
+          <Property Type="Int32" Name="ProjectsProjectID" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TypesOfOffices">
+          <Key>
+            <PropertyRef Name="TOOfficeID" />
+          </Key>
+          <Property Type="Int32" Name="TOOfficeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="Int16" Name="Capacity" Nullable="false" />
+          <Property Type="Double" Name="CostOfHiring" Nullable="false" />
+        </EntityType>
+        <Association Name="TypesOfOfficesCompanies">
+          <End Type="BusinessCodingModel.TypesOfOffices" Role="TypesOfOffices" Multiplicity="1" />
+          <End Type="BusinessCodingModel.Companies" Role="Companies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypesOfOffices">
+              <PropertyRef Name="TOOfficeID" />
+            </Principal>
+            <Dependent Role="Companies">
+              <PropertyRef Name="TypesOfOfficesTOOfficeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmpolyeesTypesOfEmployees">
+          <End Type="BusinessCodingModel.Empolyees" Role="Empolyees" Multiplicity="*" />
+          <End Type="BusinessCodingModel.TypesOfEmployees" Role="TypesOfEmployees" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="TypesOfEmployees">
+              <PropertyRef Name="TOEmployeeID" />
+            </Principal>
+            <Dependent Role="Empolyees">
+              <PropertyRef Name="TypesOfEmployeesTOEmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CompaniesProjects">
+          <End Type="BusinessCodingModel.Companies" Role="Companies" Multiplicity="0..1" />
+          <End Type="BusinessCodingModel.Projects" Role="Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="CompaniesCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CompaniesEmpolyees">
+          <End Type="BusinessCodingModel.Companies" Role="Companies" Multiplicity="0..1" />
+          <End Type="BusinessCodingModel.Empolyees" Role="Empolyees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Companies">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="Empolyees">
+              <PropertyRef Name="CompaniesCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UsersCompanies">
+          <End Type="BusinessCodingModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="BusinessCodingModel.Companies" Role="Companies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Companies">
+              <PropertyRef Name="UsersUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ProjectsDescriptions">
+          <End Type="BusinessCodingModel.Projects" Role="Projects" Multiplicity="1" />
+          <End Type="BusinessCodingModel.Descriptions" Role="Descriptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="ProjectID" />
+            </Principal>
+            <Dependent Role="Descriptions">
+              <PropertyRef Name="ProjectsProjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BusinessCodingModelStoreContainer" CdmEntityContainer="BusinessCodingModelContex">
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(BusinessCodingModel.Users)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="ActivationDate" ColumnName="ActivationDate" />
+          <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Companies">
+      <EntityTypeMapping TypeName="IsTypeOf(BusinessCodingModel.Companies)">
+        <MappingFragment StoreEntitySet="Companies">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Respect" ColumnName="Respect" />
+          <ScalarProperty Name="Money" ColumnName="Money" />
+          <ScalarProperty Name="CostOfLiving" ColumnName="CostOfLiving" />
+          <ScalarProperty Name="TypesOfOfficesTOOfficeID" ColumnName="TypesOfOfficesTOOfficeID" />
+          <ScalarProperty Name="UsersUserID" ColumnName="UsersUserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Empolyees">
+      <EntityTypeMapping TypeName="IsTypeOf(BusinessCodingModel.Empolyees)">
+        <MappingFragment StoreEntitySet="Empolyees">
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="DateOfHiring" ColumnName="DateOfHiring" />
+          <ScalarProperty Name="TypesOfEmployeesTOEmployeeID" ColumnName="TypesOfEmployeesTOEmployeeID" />
+          <ScalarProperty Name="CompaniesCompanyID" ColumnName="CompaniesCompanyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TypesOfEmployees">
+      <EntityTypeMapping TypeName="IsTypeOf(BusinessCodingModel.TypesOfEmployees)">
+        <MappingFragment StoreEntitySet="TypesOfEmployees">
+          <ScalarProperty Name="TOEmployeeID" ColumnName="TOEmployeeID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Salary" ColumnName="Salary" />
+          <ScalarProperty Name="Codity" ColumnName="Codity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Projects">
+      <EntityTypeMapping TypeName="IsTypeOf(BusinessCodingModel.Projects)">
+        <MappingFragment StoreEntitySet="Projects">
+          <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Complexity" ColumnName="Complexity" />
+          <ScalarProperty Name="TimeRounds" ColumnName="TimeRounds" />
+          <ScalarProperty Name="TimeToEnd" ColumnName="TimeToEnd" />
+          <ScalarProperty Name="Gratification" ColumnName="Gratification" />
+          <ScalarProperty Name="MinRespect" ColumnName="MinRespect" />
+          <ScalarProperty Name="MinCodity" ColumnName="MinCodity" />
+          <ScalarProperty Name="CompaniesCompanyID" ColumnName="CompaniesCompanyID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Descriptions">
+      <EntityTypeMapping TypeName="IsTypeOf(BusinessCodingModel.Descriptions)">
+        <MappingFragment StoreEntitySet="Descriptions">
+          <ScalarProperty Name="DescriptionID" ColumnName="DescriptionID" />
+          <ScalarProperty Name="String" ColumnName="String" />
+          <ScalarProperty Name="ProjectsProjectID" ColumnName="ProjectsProjectID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TypesOfOffices">
+      <EntityTypeMapping TypeName="IsTypeOf(BusinessCodingModel.TypesOfOffices)">
+        <MappingFragment StoreEntitySet="TypesOfOffices">
+          <ScalarProperty Name="TOOfficeID" ColumnName="TOOfficeID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+          <ScalarProperty Name="CostOfHiring" ColumnName="CostOfHiring" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

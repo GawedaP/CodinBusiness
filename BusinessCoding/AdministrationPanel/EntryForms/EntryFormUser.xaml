@@ -1,0 +1,220 @@
+﻿<Window x:Class="AdministrationPanel.EntryForms.EntryFormUser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:valRule="clr-namespace:AdministrationPanel.ValidationRules"
+        xmlns:locla="clr-namespace:AdministrationPanel.DatabaseEntityFramework;assembly=AdministrationPanel.DatabaseEntityFramework"
+        Title="Entry Form User" 
+        Height="350" 
+        Width="300"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="labelStyle" TargetType="Label">
+            <Setter Property="VerticalAlignment" 
+                    Value="Center"/>
+            <Setter Property="HorizontalAlignment" 
+                    Value="Right"/>
+            <Setter Property="Margin"
+                    Value="5"/>
+        </Style>
+
+        <Style x:Key="textBoxStyle" 
+               TargetType="TextBox">
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="HorizontalAlignment"
+                    Value="Left"/>
+            <Setter Property="Margin"
+                    Value="5"/>
+            <Setter Property="Width"
+                    Value="100"/>
+            <Setter Property="ToolTip"
+                    Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+        </Style>
+
+        <Style x:Key="buttonStyle"
+               TargetType="Button">
+            <Setter Property="Margin"
+                    Value="10"/>
+            <Setter Property="Width"
+                    Value="50"/>
+            <Setter Property="Height" 
+                    Value="25"/>
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="HorizontalAlignment"
+                    Value="Center"/>
+        </Style>
+
+        <Style x:Key="buttonStyleValidation"
+               TargetType="Button">
+            <Setter Property="Margin"
+                    Value="10"/>
+            <Setter Property="Width"
+                    Value="50"/>
+            <Setter Property="Height" 
+                    Value="25"/>
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="HorizontalAlignment"
+                    Value="Center"/>
+            <Setter Property="IsEnabled"
+                    Value="False"/>
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <Setter Property="IsEnabled"
+                            Value="True"/>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ElementName=textBoxLogin,
+                            Path=(Validation.HasError)}" Value="false" />
+                        <Condition Binding="{Binding ElementName=textBoxPassword,
+                            Path=(Validation.HasError)}" Value="false" />
+                        <Condition Binding="{Binding ElementName=textBoxEmail,
+                            Path=(Validation.HasError)}" Value="false" />
+                        <Condition Binding="{Binding ElementName=textBoxActivationDate,
+                            Path=(Validation.HasError)}" Value="false" />
+                        <Condition Binding="{Binding ElementName=textBoxLastLogin,
+                            Path=(Validation.HasError)}" Value="false" />
+                    </MultiDataTrigger.Conditions>
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Name="labelUserID"
+               Grid.Row="0"
+               Content="UserID:"
+               Style="{StaticResource labelStyle}"/>
+        <TextBox Name="textBoxUserID"
+                 Grid.Row="0"
+                 Grid.Column="1"
+                 IsEnabled="False"
+                 Style="{StaticResource textBoxStyle}"/>
+
+        <Label Name="labelLogin"
+               Grid.Row="1"
+               Content="Login:"
+               Style="{StaticResource labelStyle}"/>
+        <TextBox Name="textBoxLogin"
+                 Grid.Row="1"
+                 Grid.Column="1"
+                 Style="{StaticResource textBoxStyle}">
+            <TextBox.Text>
+                <Binding Path="Login"
+                         Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <valRule:StringTypeRule ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <Label Name="labelPassword"
+               Grid.Row="2"
+               Content="Password:"
+               Style="{StaticResource labelStyle}"/>
+        <TextBox Name="textBoxPassword"
+                 Grid.Row="2"
+                 Grid.Column="1"
+                 Style="{StaticResource textBoxStyle}">
+            <TextBox.Text>
+                <Binding Path="Password"
+                         Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <valRule:StringTypeRule ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <Label Name="labelEmail"
+               Grid.Row="3"
+               Content="Email:"
+               Style="{StaticResource labelStyle}"/>
+        <TextBox Name="textBoxEmail"
+                 Grid.Row="3"
+                 Grid.Column="1"
+                 Style="{StaticResource textBoxStyle}">
+            <TextBox.Text>
+                <Binding Path="Email"
+                         Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <valRule:MailRule ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <Label Name="labelActivationDate"
+               Grid.Row="4"
+               Content="Activation Date:"
+               Style="{StaticResource labelStyle}"/>
+        <TextBox Name="textBoxActivationDate"
+                 Grid.Row="4"
+                 Grid.Column="1"
+                 Style="{StaticResource textBoxStyle}">
+            <TextBox.Text>
+                <Binding Path="ActivationDate"
+                         Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <valRule:DateTimeTypeRule ValidatesOnTargetUpdated="True"
+                                                  MinDate="2000-01-01"
+                                                  MaxDate="2049-12-31"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <Label Name="labelLastLogin"
+               Grid.Row="5"
+               Content="Last Login:"
+               Style="{StaticResource labelStyle}"/>
+        <TextBox Name="textBoxLastLogin"
+                 Grid.Row="5"
+                 Grid.Column="1"
+                 Style="{StaticResource textBoxStyle}">
+            <TextBox.Text>
+                <Binding Path="LastLogin"
+                         Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <valRule:DateTimeTypeRule ValidatesOnTargetUpdated="True"
+                                                  MinDate="2000-01-01"
+                                                  MaxDate="2049-12-31"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <Button Name="buttonConfirm"
+                Content="Confirm"
+                Grid.Row="7"
+                Grid.Column="0"
+                Style="{StaticResource buttonStyleValidation}"
+                Click="buttonConfirm_Click"/>
+
+        <Button Name="buttonCancel"
+                Content="Cancel"
+                Grid.Row="7"
+                Grid.Column="1"
+                Style="{StaticResource buttonStyle}"
+                Click="buttonCancel_Click"/>
+
+    </Grid>
+</Window>

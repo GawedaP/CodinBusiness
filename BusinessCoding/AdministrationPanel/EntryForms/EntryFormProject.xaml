@@ -1,0 +1,287 @@
+﻿<Window x:Class="AdministrationPanel.EntryForms.EntryFormProject"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:valRule="clr-namespace:AdministrationPanel.ValidationRules"
+        xmlns:locla="clr-namespace:AdministrationPanel.DatabaseEntityFramework;assembly=AdministrationPanel.DatabaseEntityFramework"
+        Title="Entry Form Project" 
+        Height="450"
+        Width="325"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="labelStyle" TargetType="Label">
+            <Setter Property="VerticalAlignment" 
+                    Value="Center"/>
+            <Setter Property="HorizontalAlignment" 
+                    Value="Right"/>
+            <Setter Property="Margin"
+                    Value="5"/>
+        </Style>
+
+        <Style x:Key="textBoxStyle" 
+               TargetType="TextBox">
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="HorizontalAlignment"
+                    Value="Left"/>
+            <Setter Property="Margin"
+                    Value="5"/>
+            <Setter Property="Width"
+                    Value="100"/>
+            <Setter Property="ToolTip"
+                    Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+        </Style>
+
+        <Style x:Key="buttonStyle"
+               TargetType="Button">
+            <Setter Property="Margin"
+                    Value="10"/>
+            <Setter Property="Width"
+                    Value="50"/>
+            <Setter Property="Height" 
+                    Value="25"/>
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="HorizontalAlignment"
+                    Value="Center"/>
+        </Style>
+
+        <Style x:Key="buttonStyleValidation"
+               TargetType="Button">
+            <Setter Property="Margin"
+                    Value="10"/>
+            <Setter Property="Width"
+                    Value="50"/>
+            <Setter Property="Height" 
+                    Value="25"/>
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="HorizontalAlignment"
+                    Value="Center"/>
+            <Setter Property="IsEnabled"
+                    Value="False"/>
+            <Style.Triggers>
+                <MultiDataTrigger>
+                    <Setter Property="IsEnabled"
+                            Value="True"/>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding ElementName=textBoxName,
+                            Path=(Validation.HasError)}" Value="false" />
+                        <Condition Binding="{Binding ElementName=textBoxComplexity,
+                            Path=(Validation.HasError)}" Value="false" />
+                        <Condition Binding="{Binding ElementName=textBoxTimeRounds,
+                            Path=(Validation.HasError)}" Value="false" />
+                        <Condition Binding="{Binding ElementName=textBoxGratification,
+                            Path=(Validation.HasError)}" Value="false" />
+                        <Condition Binding="{Binding ElementName=textBoxMinRespect,
+                            Path=(Validation.HasError)}" Value="false" />
+                        <Condition Binding="{Binding ElementName=textBoxMinCodity,
+                            Path=(Validation.HasError)}" Value="false" />
+                    </MultiDataTrigger.Conditions>
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Name="labelProjectID"
+               Grid.Row="0"
+               Content="ProjectID:"
+               Style="{StaticResource labelStyle}"/>
+        <TextBox Name="textBoxProjectID"
+                 Grid.Row="0"
+                 Grid.Column="1"
+                 IsEnabled="False"
+                 Style="{StaticResource textBoxStyle}"/>
+
+        <Label Name="labelName"
+               Grid.Row="1"
+               Content="Name:"
+               Style="{StaticResource labelStyle}"/>
+        <TextBox Name="textBoxName"
+                 Grid.Row="1"
+                 Grid.Column="1"
+                 Style="{StaticResource textBoxStyle}">
+            <TextBox.Text>
+                <Binding Path="Name" 
+                         Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <valRule:StringTypeRule ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <Label Name="labelComplexity"
+               Grid.Row="2"
+               Content="Complexity:"
+               Style="{StaticResource labelStyle}"/>
+        <TextBox Name="textBoxComplexity"
+                 Grid.Row="2"
+                 Grid.Column="1"
+                 Style="{StaticResource textBoxStyle}">
+            <TextBox.Text>
+                <Binding Path="Complexity" 
+                         Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <valRule:ShortTypeRule MinValue="1"
+                                               MaxValue="100" 
+                                               ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <Label Name="labelTimeRounds"
+               Grid.Row="3"
+               Content="Time Rounds:"
+               Style="{StaticResource labelStyle}"/>
+        <TextBox Name="textBoxTimeRounds"
+                 Grid.Row="3"
+                 Grid.Column="1"
+                 Style="{StaticResource textBoxStyle}">
+            <TextBox.Text>
+                <Binding Path="TimeRounds" 
+                         Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <valRule:ShortTypeRule MinValue="1"
+                                               MaxValue="100" 
+                                               ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <Label Name="labelTimeToEnde"
+               Grid.Row="4"
+               Content="Time To End:"
+               Style="{StaticResource labelStyle}"/>
+        <TextBox Name="textBoxTimeToEnd"
+                 Grid.Row="4"
+                 Grid.Column="1"
+                 Style="{StaticResource textBoxStyle}"
+                 TextChanged="textBoxTimeToEnd_TextChanged">
+            <Binding Path="TimeToEnd"
+                     Mode="TwoWay">
+                <Binding.ValidationRules>
+                    <valRule:ShortNullTypeRule MinValue="0"
+                                               MaxValue="0"
+                                               ValidatesOnTargetUpdated="True"/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+
+        <Label Name="labelGratification"
+               Grid.Row="5"
+               Content="Gratification:"
+               Style="{StaticResource labelStyle}"/>
+        <TextBox Name="textBoxGratification"
+                 Grid.Row="5"
+                 Grid.Column="1"
+                 Style="{StaticResource textBoxStyle}">
+            <TextBox.Text>
+                <Binding Path="Gratification" 
+                         Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <valRule:DoubleTypeRule MinValue="1"
+                                                MaxValue="1000000" 
+                                                ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <Label Name="labelMinRespect"
+               Grid.Row="6"
+               Content="Min Respect:"
+               Style="{StaticResource labelStyle}"/>
+        <TextBox Name="textBoxMinRespect"
+                 Grid.Row="6"
+                 Grid.Column="1"
+                 Style="{StaticResource textBoxStyle}">
+            <TextBox.Text>
+                <Binding Path="MinRespect" 
+                         Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <valRule:IntTypeRule MinValue="1"
+                                             MaxValue="1000000" 
+                                             ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <Label Name="labelMinCodity"
+               Grid.Row="7"
+               Content="Min Codity:"
+               Style="{StaticResource labelStyle}"/>
+        <TextBox Name="textBoxMinCodity"
+                 Grid.Row="7"
+                 Grid.Column="1"
+                 Style="{StaticResource textBoxStyle}">
+            <TextBox.Text>
+                <Binding Path="MinCodity" 
+                         Mode="TwoWay">
+                    <Binding.ValidationRules>
+                        <valRule:ShortTypeRule MinValue="1"
+                                               MaxValue="100" 
+                                               ValidatesOnTargetUpdated="True"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <Label Name="labelCompaniesCompanyID"
+               Grid.Row="8"
+               Content="CompanyID:"
+               Style="{StaticResource labelStyle}"/>
+        <TextBox Name="textBoxCompaniesCompanyID"
+                 Grid.Row="8"
+                 Grid.Column="1"
+                 Style="{StaticResource textBoxStyle}"
+                 TextChanged="textBoxCompaniesCompanyID_TextChanged">
+            <Binding Path="CompaniesCompanyID"
+                     Mode="TwoWay">
+                <Binding.ValidationRules>
+                    <valRule:IntNullTypeRule MinValue="1"
+                                             MaxValue="2147483647"
+                                             ValidatesOnTargetUpdated="True"/>
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
+
+        <Button Name="buttonConfirm"
+                Content="Confirm"
+                Grid.Row="9"
+                Grid.Column="0"
+                Style="{StaticResource buttonStyleValidation}"
+                Click="buttonConfirm_Click"/>
+
+        <Button Name="buttonCancel"
+                Content="Cancel"
+                Grid.Row="9"
+                Grid.Column="1"
+                Style="{StaticResource buttonStyle}"
+                Click="buttonCancel_Click"/>
+
+    </Grid>
+</Window>
